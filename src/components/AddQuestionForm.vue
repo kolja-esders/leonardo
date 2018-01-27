@@ -1,13 +1,15 @@
 <template>
   <section class="is-clearfix box add-question-form" v-bind:class="{ collapsed: collapsed }">
-    <input class="is-size-4 has-text-weight-bold" type="text" @focus="unroll()" placeholder="Ask question...">
+    <div class="top-container">
+      <input class="is-size-4 has-text-weight-bold" type="text" @focus="unroll()" placeholder="Ask question...">
+    </div>
     <div v-if="!collapsed">
       <hr>
-      <textarea class="markdown-in" placeholder="Answer" @input="update"></textarea>
-      <div class="is-pulled-right markdown-body" v-html="compiledMarkdown"></div>
-      <button class="is-pulled-right button is-success is-large ">
-        Ask
-      </button>
+      <div>
+        <textarea class="markdown-in" placeholder="Answer" @input="update"></textarea>
+        <div class="is-pulled-right markdown-body" v-html="compiledMarkdown"></div>
+      </div>
+      <button class="button ask-btn is-pulled-right">Submit</button>
     </div>
   </section>
 </template>
@@ -46,11 +48,31 @@ export default {
 
 .add-question-form {
   &.collapsed {
-    background-color: #efefef;
+    background-color: #18a561;
 
     input {
       background-color: rgba(0, 0, 0, 0);
+
+      &::placeholder {
+          color: rgba(255, 255, 255, 0.8);
+          opacity: 1;
+      }
     }
+  }
+
+  .top-container {
+    display: flex;
+    flex-direction: row;
+
+    input {
+      flex: 1;
+      color: rgb(54, 54, 54);
+    }
+  }
+
+  .ask-btn {
+    background-color: #18a561;
+    color: rgba(255, 255, 255, 0.8);
   }
 
   input, textarea {
@@ -59,20 +81,11 @@ export default {
     border: 0;
   }
 
-  input {
-    color: rgb(54, 54, 54);
-    width: 100%;
-  }
-
   textarea {
     font-size: 1rem;
     resize: none;
     min-height: 150px;
     max-height: 100%;
-  }
-
-  button {
-    margin-top: 1.25rem;
   }
 
   hr {
