@@ -2,12 +2,12 @@
     <div class="box question">
       <div class="content">
         <p>
-        <strong class="is-size-4">Why is everybody looking at the babies of strangers all the time?</strong>
+        <strong class="is-size-4">{{ content }}</strong>
         <span class="is-pulled-right">
-          <span class="tag is-danger">Unresolved</span>
+          <span v-if="!answer" class="tag is-danger">Unresolved</span>
         </span>
           <br>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+          {{ answer }}
         </p>
       </div>
     </div>
@@ -18,10 +18,13 @@ export default {
   name: 'question',
 
   props: {
-    question: {
+    content: {
+      type: String
+    },
+    answer: {
       type: String,
       required: false,
-    },
+    }
   }
 
 }
