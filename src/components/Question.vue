@@ -1,7 +1,16 @@
 <template>
-  <div class="container">
-    <p>test</p>
-  </div>
+    <div class="box question">
+      <div class="content">
+        <p>
+        <strong class="is-size-4">Why is everybody looking at the babies of strangers all the time?</strong>
+        <span class="is-pulled-right">
+          <span class="tag is-danger">Unresolved</span>
+        </span>
+          <br>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+        </p>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -18,12 +27,6 @@ export default {
 }
 </script>
 
+
 <style lang="scss">
-.container {
-  padding: .5rem 1.5rem .5rem 1.5rem;
-  background-color: #f0f0f0ff;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-  margin-bottom: 1rem;
-}
 </style>
