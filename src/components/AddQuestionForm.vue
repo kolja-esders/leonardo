@@ -1,15 +1,15 @@
 <template>
   <section class="is-clearfix box add-question-form" v-bind:class="{ collapsed: collapsed }">
     <div class="top-container">
-      <input class="is-size-4 has-text-weight-bold" type="text" @focus="unroll()" placeholder="Ask question...">
+      <input class="is-size-4 has-text-weight-bold" type="text" @focus="unroll()" placeholder="Ask question..." v-model.trim="newQuestion.content">
     </div>
     <div v-if="!collapsed">
       <hr>
       <div>
-        <textarea class="markdown-in" placeholder="Answer" @input="update"></textarea>
+        <textarea class="markdown-in" placeholder="Answer" @input="update" v-model.trim="newQuestion.answer"></textarea>
         <div class="is-pulled-right markdown-body" v-html="compiledMarkdown"></div>
       </div>
-      <button class="button ask-btn is-pulled-right">Submit</button>
+      <button class="button ask-btn is-pulled-right" v-on:click="createQuestion">Submit</button>
     </div>
   </section>
 </template>
@@ -19,13 +19,18 @@
 import Question from './Question.vue'
 import _ from 'lodash';
 import marked from 'marked';
+import axios from 'axios';
 
 export default {
   data () {
     return {
       input: '',
-      collapsed: true
+      collapsed: true,
+      newQuestion: {},
     }
+  },
+  props: {
+    questions: []
   },
   computed: {
     compiledMarkdown: function () {
@@ -38,11 +43,25 @@ export default {
     }, 10),
     unroll() {
       this.collapsed = false;
-    }
+    },
+    createQuestion: function() {
+      if (!this.newQuestion.content) {
+          this.newQuestion = {}
+          return
+      }
+
+      axios.put('/questions', this.newQuestion).then(({ created }) => {
+        this.newQuestion.id = created
+        this.questions.push(this.newQuestion)
+        this.newQuestion = {}
+        this.input = ''
+        this.collapsed = true
+        console.log(this.newQuestion)
+      });
+    },
   }
 }
 </script>
-
 
 <style lang="scss">
 
