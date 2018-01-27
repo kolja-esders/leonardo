@@ -1,12 +1,14 @@
 <template>
-  <section class="is-clearfix box add-question-form">
-    <input class="is-size-4 has-text-weight-bold" type="text" placeholder="Question">
-    <hr>
-    <textarea class="markdown-in" placeholder="Answer" @input="update"></textarea>
-    <div class="is-pulled-right markdown-body" v-html="compiledMarkdown"></div>
-    <button class="is-hidden is-pulled-right button is-success is-large ">
-      Ask
-    </button>
+  <section class="is-clearfix box add-question-form" v-bind:class="{ collapsed: collapsed }">
+    <input class="is-size-4 has-text-weight-bold" type="text" @focus="unroll()" placeholder="Ask question...">
+    <div v-if="!collapsed">
+      <hr>
+      <textarea class="markdown-in" placeholder="Answer" @input="update"></textarea>
+      <div class="is-pulled-right markdown-body" v-html="compiledMarkdown"></div>
+      <button class="is-pulled-right button is-success is-large ">
+        Ask
+      </button>
+    </div>
   </section>
 </template>
 
@@ -19,7 +21,8 @@ import marked from 'marked';
 export default {
   data () {
     return {
-      input: ''
+      input: '',
+      collapsed: true
     }
   },
   computed: {
@@ -30,7 +33,10 @@ export default {
   methods: {
     update: _.debounce(function (e) {
       this.input = e.target.value
-    }, 10)
+    }, 10),
+    unroll() {
+      this.collapsed = false;
+    }
   }
 }
 </script>
@@ -39,6 +45,14 @@ export default {
 <style lang="scss">
 
 .add-question-form {
+  &.collapsed {
+    background-color: #efefef;
+
+    input {
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
+
   input, textarea {
     padding: 0;
     outline: none;
