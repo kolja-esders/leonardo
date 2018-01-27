@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
-    <question v-for="q in questions" :content="q.content" :answer="q.answer"/>
-    <add-question-form/>
+    <question v-for="q in questions" :key="q.id" :content="q.content" :answer="q.answer"/>
+    <add-question-form :questions="questions"/>
   </div>
 </template>
 
@@ -20,7 +20,6 @@ export default {
   },
   created () {
     axios.get('/questions').then(({ data }) => {
-      console.log(data);
       this.questions = data.items ? data.items : []
     })
   },
