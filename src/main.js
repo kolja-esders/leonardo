@@ -3,7 +3,7 @@ import App from './components/App.vue'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 
-Vue.use(Buefy, { defaultIconPack: 'fa' })
+Vue.use(Buefy)
 
 new Vue({
   el: '#app',
