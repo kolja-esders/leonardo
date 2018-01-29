@@ -52,7 +52,7 @@ export default {
           return
       }
 
-      axios.put('/questions', this.newQuestion).then(({ created }) => {
+      axios.put('/api/questions', this.newQuestion).then(({ created }) => {
         this.newQuestion.id = created
         this.questions.push(this.newQuestion)
         this.newQuestion = {}
