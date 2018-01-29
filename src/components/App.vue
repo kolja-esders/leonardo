@@ -1,6 +1,11 @@
 <template>
   <div id="app" class="container">
-    <question v-for="q in questions" :key="q.id" :content="q.content" :answer="q.answer"/>
+    <question content="test" answer="ok"/>
+    <div class="columns is-multiline">
+      <div v-for="q in questions" :key="q.id" class="column is-half">
+        <question :content="q.content" :answer="q.answer"/>
+      </div>
+    </div>
     <add-question-form :questions="questions"/>
   </div>
 </template>
@@ -19,7 +24,7 @@ export default {
     }
   },
   created () {
-    axios.get('/questions').then(({ data }) => {
+    axios.get('/api/questions').then(({ data }) => {
       this.questions = data.items ? data.items : []
     })
   },
