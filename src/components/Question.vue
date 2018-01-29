@@ -6,18 +6,21 @@
           <span class="is-pulled-right">
             <span v-if="!answer" class="tag is-danger">Unresolved</span>
           </span>
-          <span v-html="markdownAnswer"></span>
+          <markdown-view v-bind:text="answer" />
         </p>
       </div>
     </div>
 </template>
 
 <script>
+import MarkdownView from './MarkdownView.vue'
 import marked from 'marked';
 
 export default {
   name: 'question',
-
+  components: {
+    MarkdownView
+  },
   props: {
     content: {
       type: String
@@ -27,12 +30,6 @@ export default {
       required: false,
     }
   },
-  computed: {
-    markdownAnswer() {
-      return marked(this.answer || '');
-    }
-  },
-
 }
 </script>
 

@@ -8,12 +8,20 @@ import marked from 'marked';
 export default {
   data () {
     return {
-      rawText: ''
+      compiledMarkdown: ''
     }
   },
-  created () {
-    this.compiledMarkdown = marked(this.rawText, { sanitize: true })
+  props: {
+    text: ''
   },
+  created () {
+    this.compiledMarkdown = marked(this.text, { sanitize: true })
+  },
+  watch: {
+    text() {
+      this.compiledMarkdown = marked(this.text, { sanitize: true })
+    }
+  }
 }
 </script>
 
