@@ -6,7 +6,7 @@
           <span class="is-pulled-right">
             <span v-if="!answer" class="tag is-danger">Unresolved</span>
           </span>
-          <markdown-view v-bind:text="answer" />
+          <markdown-view class="md-container" v-bind:text="answer" />
         </p>
       </div>
     </div>
@@ -33,6 +33,10 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
+.question {
+  .md-container {
+    width: 100%;
+  }
+}
 </style>
