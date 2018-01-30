@@ -204,4 +204,9 @@ export default {
     user-select: none;
   }
 }
+
+// Overwrite Buefy style for toasts.
+.notices .toast {
+  margin: 1.5rem 0;
+}
 </style>
