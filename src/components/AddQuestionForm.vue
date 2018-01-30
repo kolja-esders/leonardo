@@ -5,8 +5,8 @@
     </div>
     <div v-if="!collapsed">
       <hr>
-      <div>
-        <div class="is-hidden-tablet">
+      <div class="edit-container">
+        <div class="is-hidden-tablet mobile-container">
           <textarea v-show="!isPreview" class="markdown-in" placeholder="The answer is obviously..." @input="update" v-model.trim="question.answer"></textarea>
           <markdown-view v-show="isPreview" class="mobile-preview" :text="question.answer" />
         </div>
@@ -146,21 +146,25 @@ export default {
     color: rgba(255, 255, 255, 0.8);
   }
 
+  .edit-container {
+    padding-bottom: 1.25rem;
+  }
+
   input, textarea {
     padding: 0;
     outline: none;
     border: 0;
+    line-height: 1.5;
   }
 
   textarea {
-    font-size: 1rem;
     resize: none;
-    min-height: 150px;
-    max-height: 100%;
+    height: 200px;
   }
 
   .mobile-preview {
-    min-height: 150px;
+    height: 200px;
+    overflow-y: scroll;
   }
 
   .desktop-preview {
@@ -175,6 +179,13 @@ export default {
     width: 50%;
     color: #4a4a4a;
     padding-right: 1.25rem;
+    font-size: 1rem;
+    word-wrap: break-word;
+  }
+
+  .mobile-container {
+    //overflow: hidden;
+    height: 200px;
   }
 
   .is-hidden-tablet {
