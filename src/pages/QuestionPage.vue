@@ -27,12 +27,14 @@ export default {
 <style lang="scss">
 
 .question-page {
+  padding-top: 3rem;
+  color: #2c3e50;
+}
+
+.question-page, textarea, input {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  padding-top: 3rem;
-  color: #2c3e50;
 }
 
 body {
