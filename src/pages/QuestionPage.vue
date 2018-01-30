@@ -1,5 +1,5 @@
 <template>
-  <div class="question-page container">
+  <div class="question-page container is-fluid">
     <add-question-form :question="question" mode="update" />
   </div>
 </template>
