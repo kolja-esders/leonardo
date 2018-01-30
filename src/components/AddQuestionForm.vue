@@ -71,7 +71,19 @@ export default {
       if (this.mode === 'update') {
         axios.put(`/api/questions/${this.question.id}`, this.question).then(resp => {
           let success = resp.data
-          console.log(success)
+          if (success) {
+            this.$toast.open({
+              message: 'Successfully updated question.',
+              position: 'is-bottom',
+              type: 'is-success'
+            })
+          } else {
+            this.$toast.open({
+              message: 'Unable to update question. Try again later.',
+              position: 'is-bottom',
+              type: 'is-danger'
+            })
+          }
         });
       } else if (this.mode === 'create') {
         axios.post('/api/questions', this.question).then(({ created }) => {

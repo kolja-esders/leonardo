@@ -20,7 +20,7 @@ export default {
     axios.get(`/api/questions/${this.$route.params.id}`).then(resp => {
       this.question = resp.data
     });
-  }
+  },
 }
 </script>
 
