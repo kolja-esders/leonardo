@@ -1,6 +1,5 @@
 <template>
   <div class="home-page container">
-    <question :data="{content: 'test', id: 100}" />
     <div class="columns is-multiline">
       <div v-for="q in questions" :key="q.id" class="column is-half">
         <question :data="q" />
