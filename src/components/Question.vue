@@ -6,7 +6,7 @@
         <span class="is-pulled-right">
           <span v-if="!data.answer" class="tag is-danger">Unresolved</span>
         </span>
-        <markdown-view class="md-container" v-bind:text="data.answer" />
+        <markdown-view class="md-container is-hidden-mobile" v-bind:text="data.answer" />
       </p>
     </div>
   </div>
