@@ -15,6 +15,9 @@
         Ask
       </button>
     </section>
+    <div class="disclaimer has-text-centered has-text-weight-light">
+      <small>© 2018 Kolja Esders</small>
+    </div>
   </div>
 </template>
 
@@ -40,7 +43,7 @@ export default {
   methods: {
     update: _.debounce(function (e) {
       this.input = e.target.value
-    }, 300)
+    }, 10)
   }
 }
 </script>
@@ -55,21 +58,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-
-.leonardo {
-  display: block;
-  margin: 0 auto;
-  width: 200px;
-  margin-bottom: 3rem;
-  border-radius: 100px;
-  transition: 0.8s;
-
-  &:hover {
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-    transition: 0.2s;
-  }
 }
 
 body {
@@ -117,6 +105,11 @@ hr {
     padding-right: 1.25rem;
   }
 }
+
+.disclaimer {
+  color: #f0eafe;
+}
+
 .markdown-body {
   color: #4a4a4a;
   width: 50%;
