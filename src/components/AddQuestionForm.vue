@@ -186,11 +186,11 @@ export default {
   }
 
   .preview-toggle {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
     cursor: pointer;
     color: #888;
     line-height: 36px;
     user-select: none;
   }
-
 }
 </style>
