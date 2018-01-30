@@ -6,9 +6,19 @@
     <div v-if="!collapsed">
       <hr>
       <div>
-        <textarea class="markdown-in" placeholder="The answer is obviously..." @input="update" v-model.trim="question.answer"></textarea>
-        <markdown-view class="is-pulled-right" :text="question.answer" />
+        <div class="is-hidden-tablet">
+          <textarea v-show="!isPreview" class="markdown-in" placeholder="The answer is obviously..." @input="update" v-model.trim="question.answer"></textarea>
+          <markdown-view v-show="isPreview" class="mobile-preview" :text="question.answer" />
+        </div>
+        <div class="is-hidden-mobile">
+          <textarea class="markdown-in" placeholder="The answer is obviously..." @input="update" v-model.trim="question.answer"></textarea>
+          <markdown-view class="is-pulled-right desktop-preview" :text="question.answer" />
+        </div>
       </div>
+      <span class="is-hidden-tablet">
+        <span v-if="isPreview" class="preview-toggle" @click="togglePreview">Show source</span>
+        <span v-else class="preview-toggle" @click="togglePreview">Show preview</span>
+      </span>
       <button v-if="mode === 'update'" class="button ask-btn is-pulled-right" v-on:click="createQuestion">Update</button>
       <button v-if="mode === 'create'" class="button ask-btn is-pulled-right" v-on:click="createQuestion">Create</button>
     </div>
@@ -24,7 +34,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      collapsed: true
+      collapsed: true,
+      isPreview: false
     }
   },
   components: {
@@ -60,7 +71,10 @@ export default {
       this.question.answer = e.target.value
     }, 10),
     unroll() {
-      this.collapsed = false;
+      this.collapsed = false
+    },
+    togglePreview() {
+      this.isPreview = !this.isPreview
     },
     createQuestion: function() {
       if (!this.question.content) {
@@ -145,6 +159,14 @@ export default {
     max-height: 100%;
   }
 
+  .mobile-preview {
+    min-height: 150px;
+  }
+
+  .desktop-preview {
+    width: 50%;
+  }
+
   hr {
     margin: 1.25rem 0;
   }
@@ -153,6 +175,20 @@ export default {
     width: 50%;
     color: #4a4a4a;
     padding-right: 1.25rem;
+  }
+
+  .is-hidden-tablet {
+    .markdown-in {
+      width: 100%;
+      padding-right: 0;
+    }
+  
+  }
+
+  .preview-toggle {
+    cursor: pointer;
+    color: #888;
+    line-height: 36px;
   }
 
 }

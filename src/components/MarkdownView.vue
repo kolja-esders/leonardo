@@ -28,7 +28,6 @@ export default {
 <style>
   .markdown-body {
     color: #4a4a4a;
-    width: 50%;
     font-size: 16px;
     line-height: 1.5;
     word-wrap: break-word
