@@ -189,6 +189,7 @@ export default {
     cursor: pointer;
     color: #888;
     line-height: 36px;
+    user-select: none;
   }
 
 }
