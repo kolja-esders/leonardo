@@ -1,11 +1,19 @@
 import Vue from 'vue'
 import App from './components/App.vue'
 import Buefy from 'buefy'
+import VueRouter from 'vue-router'
 import 'buefy/lib/buefy.css'
+import routes from './routes.js'
 
-Vue.use(Buefy, { defaultIconPack: 'fa' })
+const router = new VueRouter({
+  mode: 'history',
+  routes // short for `routes: routes`
+})
+
+Vue.use(Buefy)
+Vue.use(VueRouter)
 
 new Vue({
-  el: '#app',
-  render: h => h(App)
+  router,
+  el: '#app'
 })
