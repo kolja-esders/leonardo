@@ -38,7 +38,6 @@ export default {
 .question {
   &:hover {
     cursor: pointer;
-  
   }
 
   .md-container {

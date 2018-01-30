@@ -30,7 +30,7 @@ export default {
     color: #4a4a4a;
     font-size: 16px;
     line-height: 1.5;
-    word-wrap: break-word
+    word-wrap: break-word;
   }
 
   .markdown-body>*:first-child {
