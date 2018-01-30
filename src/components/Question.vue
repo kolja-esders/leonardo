@@ -5,7 +5,7 @@
           <router-link :to="`/questions/${data.id}`"><strong class="is-size-4">{{ data.content }}</strong></router-link>
           
           <span class="is-pulled-right">
-            <span v-if="!answer" class="tag is-danger">Unresolved</span>
+            <span v-if="!data.answer" class="tag is-danger">Unresolved</span>
           </span>
           <markdown-view class="md-container" v-bind:text="data.answer" />
         </p>
