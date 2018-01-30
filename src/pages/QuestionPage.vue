@@ -37,6 +37,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 
+textarea, input {
+  line-height: 1.5;
+}
+
 body {
   background: radial-gradient(ellipse at top left, #137F4B 0%, #006736 100%) no-repeat;
   min-height: 100vh;
