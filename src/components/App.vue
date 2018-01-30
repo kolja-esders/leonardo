@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page container is-fluid">
+  <div class="home-page container">
     <div class="columns is-multiline">
       <div v-for="q in questions" :key="q.id" class="column is-half">
         <question :data="q" />
@@ -32,7 +32,7 @@ export default {
 
 <style lang="scss">
 .home-page {
-  padding: 3rem 0;
+  padding: 1.5rem;
   color: #2c3e50;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="question-page container is-fluid">
+  <div class="question-page container">
     <add-question-form :question="question" mode="update" />
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
 <style lang="scss">
 
 .question-page {
-  padding-top: 3rem;
+  padding: 1.5rem;
   color: #2c3e50;
 }
 
