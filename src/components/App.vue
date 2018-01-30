@@ -1,12 +1,12 @@
 <template>
-  <div id="app" class="container">
-    <question content="test" answer="ok"/>
+  <div class="home-page container">
+    <question :data="{content: 'test', id: 100}" />
     <div class="columns is-multiline">
       <div v-for="q in questions" :key="q.id" class="column is-half">
-        <question :content="q.content" :answer="q.answer"/>
+        <question :data="q" />
       </div>
     </div>
-    <add-question-form :questions="questions"/>
+    <add-question-form :questions="questions" init-collapsed=true mode="create" />
   </div>
 </template>
 
@@ -32,12 +32,12 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  padding: 3rem;
+.home-page {
+  padding: 3rem 0;
   color: #2c3e50;
 }
 
-#app, textarea, input {
+.home-page, textarea, input {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -48,9 +48,12 @@ body {
   min-height: 100vh;
   margin: 0;
 }
-
 a {
-  color: #42b983;
-}
+  color: #006736;
 
+  &:hover {
+    text-decoration: underline;
+    color: #006736;
+  }
+}
 </style>

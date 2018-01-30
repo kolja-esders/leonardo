@@ -2,11 +2,12 @@
     <div class="box question">
       <div class="content">
         <p class="is-clearfix">
-          <strong class="is-size-4">{{ content }}</strong>
+          <router-link :to="`/questions/${data.id}`"><strong class="is-size-4">{{ data.content }}</strong></router-link>
+          
           <span class="is-pulled-right">
             <span v-if="!answer" class="tag is-danger">Unresolved</span>
           </span>
-          <markdown-view class="md-container" v-bind:text="answer" />
+          <markdown-view class="md-container" v-bind:text="data.answer" />
         </p>
       </div>
     </div>
@@ -22,12 +23,8 @@ export default {
     MarkdownView
   },
   props: {
-    content: {
-      type: String
-    },
-    answer: {
-      type: String,
-      required: false,
+    data: {
+      type: Object,
     }
   },
 }

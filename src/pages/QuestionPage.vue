@@ -1,17 +1,39 @@
 <template>
-  <div class="question-page">
+  <div class="question-page container">
+    <add-question-form :question="question" mode="update" />
   </div>
 </template>
 
 <script>
-import Question from '../components/Question.vue'
+import AddQuestionForm from '../components/AddQuestionForm.vue'
 import axios from 'axios';
 
 export default {
   name: 'question-page',
-  components: { Question },
+  data () {
+    return {
+      question: {}
+    }
+  },
+  components: { AddQuestionForm },
+  created () {
+    axios.get(`/api/questions/${this.$route.params.id}`).then(resp => {
+      this.question = resp.data
+    });
+  }
 }
 </script>
 
 <style lang="scss">
+
+.question-page {
+  padding-top: 3rem;
+  color: #2c3e50;
+}
+
+body {
+  background: radial-gradient(ellipse at top left, #137F4B 0%, #006736 100%) no-repeat;
+  min-height: 100vh;
+  margin: 0;
+}
 </style>

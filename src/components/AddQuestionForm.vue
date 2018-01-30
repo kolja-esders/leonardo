@@ -1,15 +1,16 @@
 <template>
-  <section class="is-clearfix box add-question-form" v-bind:class="{ collapsed: collapsed }">
+  <section class="is-clearfix box add-question-form" :class="{ collapsed: collapsed }">
     <div class="top-container">
-      <input class="is-size-4 has-text-weight-bold" type="text" @focus="unroll()" placeholder="Ask question..." v-model.trim="newQuestion.content">
+      <input class="is-size-4 has-text-weight-bold" type="text" @focus="unroll()" placeholder="Why is Leonardo da Vinci so..." v-model.trim="question.content">
     </div>
     <div v-if="!collapsed">
       <hr>
       <div>
-        <textarea class="markdown-in" placeholder="Answer" @input="update" v-model.trim="newQuestion.answer"></textarea>
-        <markdown-view class="is-pulled-right" :text="input" />
+        <textarea class="markdown-in" placeholder="The answer is obviously..." @input="update" v-model.trim="question.answer"></textarea>
+        <markdown-view class="is-pulled-right" :text="question.answer" />
       </div>
-      <button class="button ask-btn is-pulled-right" v-on:click="createQuestion">Submit</button>
+      <button v-if="mode === 'update'" class="button ask-btn is-pulled-right" v-on:click="createQuestion">Update</button>
+      <button v-if="mode === 'create'" class="button ask-btn is-pulled-right" v-on:click="createQuestion">Create</button>
     </div>
   </section>
 </template>
@@ -21,45 +22,68 @@ import marked from 'marked';
 import axios from 'axios';
 
 export default {
-  data () {
+  data() {
     return {
-      input: '',
-      collapsed: true,
-      newQuestion: {},
+      collapsed: true
     }
   },
   components: {
     MarkdownView
   },
   props: {
-    questions: []
-  },
-  computed: {
-    compiledMarkdown: function () {
-      return marked(this.input, { sanitize: true })
+    questions: {
+      type: Array,
+      default: [],
+      required: false
+    },
+    question: {
+      type: Object,
+      default: {},
+      required: false
+    },
+    initCollapsed: {
+      type: Boolean,
+      required: false
+    },
+    mode: {
+      type: String,
+      validator: v => {
+        return v === 'update' || v === 'create'
+      }
     }
+  },
+  mounted: function(){
+    this.collapsed = this.initCollapsed
   },
   methods: {
     update: _.debounce(function (e) {
-      this.input = e.target.value
+      this.question.answer = e.target.value
     }, 10),
     unroll() {
       this.collapsed = false;
     },
     createQuestion: function() {
-      if (!this.newQuestion.content) {
-          this.newQuestion = {}
+      if (!this.question.content) {
+          this.question = {}
           return
       }
 
-      axios.put('/api/questions', this.newQuestion).then(({ created }) => {
-        this.newQuestion.id = created
-        this.questions.push(this.newQuestion)
-        this.newQuestion = {}
-        this.input = ''
-        this.collapsed = true
-        console.log(this.newQuestion)
-      });
+      if (this.mode === 'update') {
+        axios.put(`/api/questions/${this.question.id}`, this.question).then(resp => {
+          let success = resp.data
+          console.log(success)
+        });
+      } else if (this.mode === 'create') {
+        axios.post('/api/questions', this.question).then(({ created }) => {
+          if (!this.question.id) {
+            this.question.id = created
+          }
+          this.questions.push(this.question)
+          //this.question = {}
+          //this.collapsed = true
+        });
+      }
+
     },
   }
 }

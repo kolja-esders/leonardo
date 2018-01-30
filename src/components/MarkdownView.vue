@@ -15,7 +15,7 @@ export default {
     text: ''
   },
   created () {
-    this.compiledMarkdown = marked(this.text, { sanitize: true })
+    this.compiledMarkdown = marked(this.text || '', { sanitize: true })
   },
   watch: {
     text() {
