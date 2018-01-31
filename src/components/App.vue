@@ -58,7 +58,6 @@ a {
   color: #006736;
 
   &:hover {
-    text-decoration: underline;
     color: #006736;
   }
 }
