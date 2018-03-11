@@ -1,11 +1,11 @@
 <template>
   <div class="home-page container">
     <div class="columns is-multiline">
-      <div v-for="q in questions" :key="q.id" class="column is-half">
-        <question :data="q" />
+      <div v-for="q in questions" :key="q.id" v-if="!q.is_deleted" class="column is-half">
+        <question :data="q"/>
       </div>
     </div>
-    <add-question-form :questions="questions" init-collapsed=true mode="create" />
+    <add-question-form :questions="questions" init-collapsed=true mode="create" v-on:questionCreated="onQuestionCreated" />
     <div class="disclaimer has-text-centered has-text-weight-light">
       <small>© 2018 Kolja Esders</small>
     </div>
@@ -25,11 +25,16 @@ export default {
       questions: []
     }
   },
-  created () {
+  created() {
     axios.get('/api/questions').then(({ data }) => {
       this.questions = data.items ? data.items : []
     })
   },
+  methods: {
+    onQuestionCreated(q) {
+      this.questions.push(q)
+    },
+  }
 }
 </script>
 
