@@ -3,9 +3,6 @@
     <div class="content">
       <p class="is-clearfix">
       <strong class="is-size-4">{{ data.content }}</strong>
-        <span class="is-pulled-right">
-          <span v-if="!data.answer" class="tag is-danger">Unresolved</span>
-        </span>
         <markdown-view class="md-container is-hidden-mobile" v-bind:text="data.answer" />
       </p>
     </div>
