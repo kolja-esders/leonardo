@@ -2,7 +2,7 @@
   <div class="add-question-form">
     <section class="is-clearfix box add-question-form" :class="{ collapsed: collapsed }">
       <div class="is-hidden-tablet">
-        mobile
+        Not optimized for mobile yet.
       </div>
       <div class="desktop is-hidden-mobile is-clearfix">
         <div class="src is-pulled-left">
@@ -16,8 +16,8 @@
           <div class="markdown-container" v-if="!collapsed">
             <markdown-view class="markdown" :text="data.answer" />
             <div class="controls-container">
-              <div class="is-pulled-right">
-                <b-icon icon="delete is-pulled-right" class="delete-icon"></b-icon>
+              <div class="is-pulled-right" @click="del">
+                <b-icon icon="delete is-pulled-right" v-if="mode === 'update'" class="delete-icon"></b-icon>
                 <a :class="{ 'is-loading': isLoading }" class="button is-outlined is-success is-pulled-right" @click="process"><span v-if="mode === 'update'">Update question</span><span v-if="mode === 'create'">Create question</span></a>
               </div>
             </div>
@@ -27,33 +27,9 @@
     </section>
     <div class="is-hidden-tablet mobile-buttons">
       <a class="button is-light is-outlined back-button"><b-icon icon="chevron-left" /></a>
-      <a class="button is-success is-outlined action-button"><span v-if="mode === 'update'">Update</span><span v-if="mode === 'create'">Create</span></a>
+      <a class="button is-success action-button"><span v-if="mode === 'update'">Update</span><span v-if="mode === 'create'">Create</span></a>
     </div>
   </div>
-
-
-    <!--<div class="top-container">-->
-      <!--<input class="is-size-4 has-text-weight-bold" type="text" @focus="unroll()" placeholder="Why is Leonardo da Vinci so..." v-model.trim="question.content">-->
-    <!--</div>-->
-    <!--<div v-if="!collapsed">-->
-      <!--<hr>-->
-      <!--<div class="edit-container">-->
-        <!--<div class="is-hidden-tablet mobile-container">-->
-          <!--<textarea v-show="!isPreview" class="markdown-in" placeholder="The answer is obviously..." @input="update" v-model.trim="question.answer"></textarea>-->
-          <!--<markdown-view v-show="isPreview" class="mobile-preview" :text="question.answer" />-->
-        <!--</div>-->
-        <!--<div class="is-hidden-mobile">-->
-          <!--<textarea class="markdown-in" placeholder="The answer is obviously..." @input="update" v-model.trim="question.answer"></textarea>-->
-          <!--<markdown-view class="is-pulled-right desktop-preview" :text="question.answer" />-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<span class="is-hidden-tablet">-->
-        <!--<span v-if="isPreview" class="preview-toggle" @click="togglePreview">Show source</span>-->
-        <!--<span v-else class="preview-toggle" @click="togglePreview">Show preview</span>-->
-      <!--</span>-->
-      <!--<button v-if="mode === 'update'" class="button ask-btn is-pulled-right" v-on:click="createQuestion">Update</button>-->
-      <!--<button v-if="mode === 'create'" class="button ask-btn is-pulled-right" v-on:click="createQuestion">Create</button>-->
-    <!--</div>-->
 </template>
 
 <style lang="scss">
@@ -273,7 +249,8 @@ export default {
       type: Object,
       default: {
         content: '',
-        answer: ''
+        answer: '',
+        is_deleted: false
       },
       required: false
     },
@@ -306,7 +283,16 @@ export default {
     togglePreview() {
       this.isPreview = !this.isPreview
     },
-    process: function() {
+    del() {
+      this.data.is_deleted = true
+      axios.put(`/api/questions/${this.data.id}`, this.data).then(resp => {
+        let success = resp.data
+        if (success) {
+          this.$router.replace(`/`)
+        }
+      });
+    },
+    process() {
       if (this.isLoading) {
         return
       } else if (!this.data.content) {
@@ -334,19 +320,17 @@ export default {
           }
         });
       } else if (this.mode === 'create') {
-        axios.post('/api/questions', this.data).then(({ created }) => {
-          console.log('ok created')
+        axios.post('/api/questions', this.data).then(({ data }) => {
           this.isLoading = false
           if (!this.data.id) {
-            this.data.id = created
+            this.data.id = data.created
           }
-          const cpy  = Object.assign({}, this.data);
-          this.questions.push(cpy)
+          this.data.is_deleted = false
+          this.$emit('questionCreated', this.data)
           this.data = {}
           this.collapsed = true
         });
       }
-
     },
   }
 }
